@@ -16,6 +16,10 @@ build:
       context: src/fastapi
       docker:
         dockerfile: Dockerfile
+    - image: dummy_user
+      context: src/dummy_user
+      docker:
+        dockerfile: Dockerfile
 manifests:
   rawYaml:
     - manifests/consumer-deployment.yaml
