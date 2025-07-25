@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi-app-notcached
+  name: fastapi-app
 spec:
   strategy:
     type: Recreate
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fastapi
-          image: host.minikube.internal:5001/fastapi-notcached:latest
+          image: host.minikube.internal:5001/fastapi:latest
           imagePullPolicy: Always
           volumeMounts:
             - name: db-volume
@@ -36,6 +36,6 @@ spec:
     app: fastapi
   ports:
     - protocol: TCP
-      port: 8001
+      port: 8000
       targetPort: 8000
-      nodePort: 30001
+      nodePort: 30000

@@ -1,18 +1,16 @@
 import uvicorn, sqlite3, uuid
 from fastapi import FastAPI
 from pydantic import BaseModel
-import signal, sys
+import signal, sys, os
 
 app = FastAPI()
 
-
 def handle_sigterm(signum, frame):
     print("Received SIGTERM, exiting now.")
-    sys.exit(0)  # Exit immediately without waiting
+    sys.exit(0)
 
-# Register signal handler
 signal.signal(signal.SIGTERM, handle_sigterm)
-signal.signal(signal.SIGINT, handle_sigterm)  # Optional: Ctrl+C too
+signal.signal(signal.SIGINT, handle_sigterm)
 
 class UserPost(BaseModel):
     username: str
@@ -20,7 +18,7 @@ class UserPost(BaseModel):
 
 @app.get("/")
 def index():
-    hehe = "haha new image too"
+    hehe = "haha new image too 3"
     return {"result": "INDEX PAGE"}
 
 @app.get("/users")
@@ -29,7 +27,20 @@ def users():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
+    conn.close()
     return {"result": users}
+
+@app.get("/users/{userid}")
+def get_user(userid: str):
+    conn = sqlite3.connect('/data/database.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE userid=?", (userid,))
+    user = cursor.fetchone()
+    conn.close()
+    if user:
+        return {"result": user}
+    else:
+        return {"result": "User not found"}, 404
 
 @app.post("/users/add_user")
 def add_user(user: UserPost):
@@ -38,6 +49,7 @@ def add_user(user: UserPost):
     new_id = str(uuid.uuid4())
     cursor.execute("INSERT INTO users (userid, username, password) VALUES (?, ?, ?)", (new_id, user.username, user.password))
     conn.commit()
+    conn.close()
     return {"result": "User added", "data":{
         "username": user.username,
         "password": user.password,

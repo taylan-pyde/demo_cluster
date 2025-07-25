@@ -1,0 +1,17 @@
+---
+apiVersion: kubefledged.io/v1alpha2
+kind: ImageCache
+metadata:
+  # Name of the image cache. A cluster can have multiple image cache objects
+  name: image-cache
+  namespace: kube-fledged
+  # The kubernetes namespace to be used for this image cache. You can choose a different namepace as per your preference
+  labels:
+    app: kubefledged
+    kubefledged: imagecache
+spec:
+  # The "cacheSpec" field allows a user to define a list of images and onto which worker nodes those images should be cached (i.e. pre-pulled).
+  cacheSpec:
+  - images:
+    - host.minikube.internal:5001/fastapi:latest
+    cacheOnAllNodes: true

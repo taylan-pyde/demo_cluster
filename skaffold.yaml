@@ -16,7 +16,7 @@ build:
       context: src/fastapi
       docker:
         dockerfile: Dockerfile
-    - image: dummy_user
+    - image: dummy-user
       context: src/dummy_user
       docker:
         dockerfile: Dockerfile
@@ -27,3 +27,4 @@ manifests:
     - manifests/persistent-volume.yaml
     - manifests/provider-deployment.yaml
     - manifests/redis.yaml
+    - manifests/dummy-user-deployment.yaml

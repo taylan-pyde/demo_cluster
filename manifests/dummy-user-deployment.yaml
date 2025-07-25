@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dummy_user
+  name: dummy-user
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
-      app: dummy_user
+      app: dummy-user
   template:
     metadata:
       labels:
-        app: dummy_user
+        app: dummy-user
     spec:
       containers:
-      - name: provider
-        image: provider
+      - name: dummy-user
+        image: dummy-user
         imagePullPolicy: IfNotPresent
