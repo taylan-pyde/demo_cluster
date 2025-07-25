@@ -13,5 +13,4 @@ spec:
   # The "cacheSpec" field allows a user to define a list of images and onto which worker nodes those images should be cached (i.e. pre-pulled).
   cacheSpec:
   - images:
-    - host.minikube.internal:5001/fastapi:latest
-    cacheOnAllNodes: true
+    - host.minikube.internal:5001/fastapi:latest # gets patched on runtime via bash script

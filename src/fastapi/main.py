@@ -18,7 +18,6 @@ class UserPost(BaseModel):
 
 @app.get("/")
 def index():
-    hehe = "haha new image too 3"
     return {"result": "INDEX PAGE"}
 
 @app.get("/users")
