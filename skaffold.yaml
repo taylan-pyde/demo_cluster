@@ -1,0 +1,25 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: demo-cluster
+build:
+  artifacts:
+    - image: consumer
+      context: src/demo/consumer
+      docker:
+        dockerfile: Dockerfile
+    - image: provider
+      context: src/demo/provider
+      docker:
+        dockerfile: Dockerfile
+    - image: fastapi-app
+      context: src/fastapi
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - manifests/consumer-deployment.yaml
+    - manifests/fastapi-deployment.yaml
+    - manifests/persistent-volume.yaml
+    - manifests/provider-deployment.yaml
+    - manifests/redis.yaml
